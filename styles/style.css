@@ -1,0 +1,79 @@
+
+body
+{
+    
+    background-image: url("../images/casino2.jpg");
+}
+.heading
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 75px;
+    flex-wrap: wrap;
+}
+
+.logo{
+    width: 50px;
+    height: 50px;
+   align-content: end;
+    
+}
+
+.title{
+    height: 50px;
+    font-size: 45px;
+    font: weight 10px;
+    color: white;
+}
+div{
+
+    display: flex;
+    justify-content: center;
+
+}
+
+.play_button
+{
+    display: flex;
+    padding: 15px 25px;
+    font-size: large;
+    background-color:yellowgreen;
+    align-items: center;
+    justify-content: center;
+   
+}
+.play_button:hover{
+    background-color: green;
+}
+
+.dealer
+{
+   font-size: large;
+   justify-content: center;
+   color: whitesmoke;
+   padding: 30px 30px;
+   border-radius: 15px;
+
+
+}
+.player
+{
+    font-size: large;
+    justify-content: center;
+    color: whitesmoke;
+    padding: 30px 30px;
+    border-radius: 10px;
+}
+
+
+
+.login-container{
+    display:flex;
+    flex-direction: column;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    padding: 30px;
+}
