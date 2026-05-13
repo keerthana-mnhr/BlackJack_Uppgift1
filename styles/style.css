@@ -77,3 +77,14 @@ div{
     margin: 20px auto;
     padding: 30px;
 }
+
+
+.register-container{
+    display:flex;
+    flex-direction: column;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    padding: 30px;
+}
