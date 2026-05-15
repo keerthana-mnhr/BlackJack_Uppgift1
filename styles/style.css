@@ -3,7 +3,12 @@ body
 {
     
     background-image: url("../images/casino2.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
 }
+
 .heading
 {
     display: flex;
@@ -11,6 +16,7 @@ body
     justify-content: center;
     gap: 75px;
     flex-wrap: wrap;
+    margin-bottom: 30px;
 }
 
 .logo{
@@ -26,11 +32,18 @@ body
     font: weight 10px;
     color: white;
 }
+
 div{
 
     display: flex;
     justify-content: center;
 
+}
+
+.game-controls {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
 }
 
 .play_button
@@ -41,10 +54,15 @@ div{
     background-color:yellowgreen;
     align-items: center;
     justify-content: center;
-   
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
 }
+
 .play_button:hover{
     background-color: green;
+    transform: scale(1.05);
 }
 
 .dealer
@@ -54,9 +72,18 @@ div{
    color: whitesmoke;
    padding: 30px 30px;
    border-radius: 15px;
-
-
+   margin-bottom: 30px;
 }
+
+.dealer-cards {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin-top: 15px;
+}
+
 .player
 {
     font-size: large;
@@ -64,9 +91,117 @@ div{
     color: whitesmoke;
     padding: 30px 30px;
     border-radius: 10px;
+    margin-bottom: 30px;
 }
 
+.player-cards {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin-top: 15px;
+}
 
+.card-image {
+    width: 80px;
+    height: 120px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s;
+}
+
+.card-image:hover {
+    transform: scale(1.1);
+}
+
+.game-actions {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin: 30px 0;
+}
+
+/* Right side vertical controls */
+.game-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.table-area {
+    flex: 1 1 auto;
+    margin-right: 180px; /* reserve space for fixed right controls */
+}
+
+.controls-right {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    z-index: 50;
+    width: 140px;
+}
+
+.game-actions-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.action-button {
+    padding: 12px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    border: 2px solid white;
+    background-color: #ff6b6b;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.action-button:hover:not(:disabled) {
+    background-color: #ff5252;
+    transform: scale(1.05);
+}
+
+.action-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.result-message {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    padding: 20px;
+    margin: 20px auto;
+    border-radius: 10px;
+    max-width: calc(100% - 220px); /* avoid overlapping right controls */
+    min-height: 30px;
+}
+
+.result-message.win {
+    background-color: rgba(76, 175, 80, 0.8);
+    border: 3px solid #4CAF50;
+}
+
+.result-message.lose {
+    background-color: rgba(244, 67, 54, 0.8);
+    border: 3px solid #F44336;
+}
+
+.result-message.tie {
+    background-color: rgba(255, 193, 7, 0.8);
+    border: 3px solid #FFC107;
+    color: black;
+}
 
 .login-container{
     display:flex;
@@ -77,7 +212,6 @@ div{
     margin: 20px auto;
     padding: 30px;
 }
-
 
 .register-container{
     display:flex;
