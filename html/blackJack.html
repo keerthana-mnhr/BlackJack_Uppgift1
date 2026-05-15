@@ -31,6 +31,10 @@
         </div>
 
         <div class="controls-right" aria-hidden="false">
+            <div class="user-panel">
+                <div id="user-display">Not logged in</div>
+                <button class="logout-button" id="logout-btn" onclick="logoutUser()">Logout</button>
+            </div>
             <button class="play_button" onclick="startNewGame()">New Game</button>
             <div class="game-actions-vertical">
                 <button class="action-button" id="hit-btn" onclick="playerHit()" disabled>Hit</button>

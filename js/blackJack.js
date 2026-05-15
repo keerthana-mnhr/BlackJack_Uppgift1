@@ -2,8 +2,8 @@
 class BlackjackGame {
     constructor() {
         this.deck = [];
-        this.playerHand = [];
-        this.dealerHand = [];
+        this.playerCards = [];
+        this.dealerCards = [];
         this.gameOver = false;
         this.initializeDeck();
     }
@@ -35,7 +35,6 @@ class BlackjackGame {
 
     
     getCardValue(cardNumber) {
-        
         const rankOrder = ['A', 'K', 'Q', 'J', '10', '9', '8', '7', '6', '5', '4', '3', '2'];
         const rankIndex = Math.floor((cardNumber - 1) / 4);
         const rank = rankOrder[rankIndex];
@@ -72,16 +71,16 @@ class BlackjackGame {
     
     startGame() {
         this.initializeDeck();
-        this.playerHand = [];
-        this.dealerHand = [];
+        this.playerCards = [];
+        this.dealerCards = [];
         this.gameOver = false;
 
-        // Deal 2 cards to each player
-        this.playerHand.push(this.drawCard());
-        this.playerHand.push(this.drawCard());
         
-        this.dealerHand.push(this.drawCard());
-        this.dealerHand.push(this.drawCard());
+        this.playerCards.push(this.drawCard());
+        this.playerCards.push(this.drawCard());
+        
+        this.dealerCards.push(this.drawCard());
+        this.dealerCards.push(this.drawCard());
 
         return this.getGameState();
     }
@@ -90,8 +89,8 @@ class BlackjackGame {
     playerHit() {
         if (this.gameOver) return null;
 
-        this.playerHand.push(this.drawCard());
-        const playerScore = this.calculateScore(this.playerHand);
+        this.playerCards.push(this.drawCard());
+        const playerScore = this.calculateScore(this.playerCards);
 
         if (playerScore > 21) {
             this.gameOver = true;
@@ -106,12 +105,12 @@ class BlackjackGame {
         if (this.gameOver) return null;
 
         
-        while (this.calculateScore(this.dealerHand) < 17) {
-            this.dealerHand.push(this.drawCard());
+        while (this.calculateScore(this.dealerCards) < 17) {
+            this.dealerCards.push(this.drawCard());
         }
 
-        const playerScore = this.calculateScore(this.playerHand);
-        const dealerScore = this.calculateScore(this.dealerHand);
+        const playerScore = this.calculateScore(this.playerCards);
+        const dealerScore = this.calculateScore(this.dealerCards);
 
         this.gameOver = true;
 
@@ -154,16 +153,16 @@ class BlackjackGame {
     
     getGameState() {
         return {
-            playerHand: this.playerHand,
-            dealerHand: this.dealerHand,
-            playerScore: this.calculateScore(this.playerHand),
-            dealerScore: this.calculateScore(this.dealerHand),
+            playerCards: this.playerCards,
+            dealerCards: this.dealerCards,
+            playerScore: this.calculateScore(this.playerCards),
+            dealerScore: this.calculateScore(this.dealerCards),
             gameOver: this.gameOver
         };
     }
 }
 
-// Global game instance
+
 let game = new BlackjackGame();
 
 function getCurrentUser() {
@@ -177,6 +176,21 @@ function getCurrentUser() {
 function saveCurrentUser(user) {
     if (!user) return;
     localStorage.setItem('currentUser', JSON.stringify(user));
+}
+
+function initUserDisplay() {
+    const user = getCurrentUser();
+    const display = document.getElementById('user-display');
+
+    if (!display || !user || !user.username) return;
+
+    const scorePart = user.score !== undefined && user.score !== null ? ` (${user.score})` : '';
+    display.textContent = `${user.username}${scorePart}`;
+}
+
+function logoutUser() {
+    localStorage.removeItem('currentUser');
+    window.location.href = 'index.html';
 }
 
 function updateLoggedInUserScore(score) {
@@ -199,7 +213,7 @@ function displayPlayerCards() {
     const container = document.getElementById('player-cards');
     container.innerHTML = '';
     
-    for (let card of game.playerHand) {
+    for (let card of game.playerCards) {
         const img = document.createElement('img');
         img.src = `../images/${card}.png`;
         img.alt = `Card ${card}`;
@@ -207,17 +221,17 @@ function displayPlayerCards() {
         container.appendChild(img);
     }
     
-    const score = game.calculateScore(game.playerHand);
+    const score = game.calculateScore(game.playerCards);
     document.getElementById('player-score').textContent = `(Score: ${score})`;
     updateLoggedInUserScore(score);
 }
 
-// Display dealer's cards
+
 function displayDealerCards() {
     const container = document.getElementById('dealer-cards');
     container.innerHTML = '';
     
-    for (let card of game.dealerHand) {
+    for (let card of game.dealerCards) {
         const img = document.createElement('img');
         img.src = `../images/${card}.png`;
         img.alt = `Card ${card}`;
@@ -225,10 +239,10 @@ function displayDealerCards() {
         container.appendChild(img);
     }
     
-    document.getElementById('dealer-score').textContent = `(Score: ${game.calculateScore(game.dealerHand)})`;
+    document.getElementById('dealer-score').textContent = `(Score: ${game.calculateScore(game.dealerCards)})`;
 }
 
-// Start a new game
+
 function startNewGame() {
     game.startGame();
     displayPlayerCards();
@@ -236,11 +250,23 @@ function startNewGame() {
     
     document.getElementById('hit-btn').disabled = false;
     document.getElementById('stand-btn').disabled = false;
-    document.getElementById('result-message').textContent = '';
-    document.getElementById('result-message').className = 'result-message';
+    setGameMessage('');
 }
 
-// Player hits
+function setGameMessage(message, type = '') {
+    const messageEl = document.getElementById('result-message');
+    if (!messageEl) return;
+
+    messageEl.innerText = message;
+    messageEl.className = 'result-message';
+    if (message) {
+        messageEl.classList.add('show');
+        if (type) {
+            messageEl.classList.add(type);
+        }
+    }
+}
+
 function playerHit() {
     const result = game.playerHit();
     
@@ -252,7 +278,7 @@ function playerHit() {
     }
 }
 
-// Player stands
+
 function playerStand() {
     const result = game.playerStand();
     
@@ -264,22 +290,20 @@ function playerStand() {
     }
 }
 
-// End game and display result
+window.addEventListener('DOMContentLoaded', initUserDisplay);
+
 function endGame(result) {
     document.getElementById('hit-btn').disabled = true;
     document.getElementById('stand-btn').disabled = true;
     
-    const messageEl = document.getElementById('result-message');
-    messageEl.textContent = result.message;
-    messageEl.className = 'result-message show';
-    
+    let type = '';
     if (result.result === 'WIN') {
-        messageEl.classList.add('win');
-    } else if (result.result === 'LOSE') {
-        messageEl.classList.add('lose');
-    } else if (result.result === 'BUST') {
-        messageEl.classList.add('lose');
+        type = 'win';
+    } else if (result.result === 'LOSE' || result.result === 'BUST') {
+        type = 'lose';
     } else if (result.result === 'TIE') {
-        messageEl.classList.add('tie');
+        type = 'tie';
     }
+
+    setGameMessage(result.message, type);
 }
