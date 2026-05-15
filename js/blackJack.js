@@ -163,7 +163,7 @@ class BlackjackGame {
     }
 }
 
-// Global game instance
+
 let game = new BlackjackGame();
 
 function getCurrentUser() {
@@ -212,7 +212,7 @@ function displayPlayerCards() {
     updateLoggedInUserScore(score);
 }
 
-// Display dealer's cards
+
 function displayDealerCards() {
     const container = document.getElementById('dealer-cards');
     container.innerHTML = '';
@@ -228,7 +228,7 @@ function displayDealerCards() {
     document.getElementById('dealer-score').textContent = `(Score: ${game.calculateScore(game.dealerHand)})`;
 }
 
-// Start a new game
+
 function startNewGame() {
     game.startGame();
     displayPlayerCards();
@@ -240,7 +240,7 @@ function startNewGame() {
     document.getElementById('result-message').className = 'result-message';
 }
 
-// Player hits
+
 function playerHit() {
     const result = game.playerHit();
     
@@ -252,7 +252,6 @@ function playerHit() {
     }
 }
 
-// Player stands
 function playerStand() {
     const result = game.playerStand();
     
@@ -264,7 +263,7 @@ function playerStand() {
     }
 }
 
-// End game and display result
+
 function endGame(result) {
     document.getElementById('hit-btn').disabled = true;
     document.getElementById('stand-btn').disabled = true;
