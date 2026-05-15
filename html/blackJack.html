@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Blackjack Game</title>
     <script src="../js/blackJack.js"></script>
     <link rel="stylesheet" href="../styles/style.css">
 </head>
@@ -12,25 +12,32 @@
             <img src="../images/logo.png" class="logo">
             <h1 class="title">BLACK JACK </h1>
      </header>  
-    <div >
-    <button class="play_button">Play</button>
+    
+    <div class="game-wrapper">
+        <div class="table-area">
+            <section class="dealer">
+                <h2>Dealer <span id="dealer-score">(Score: 0)</span></h2>
+                <div class="dealer-cards" id="dealer-cards">
+                </div>
+            </section>
+
+            <section class="player">
+                <h2>Player <span id="player-score">(Score: 0)</span></h2>
+                <div class="player-cards" id="player-cards">
+                </div>
+            </section>
+
+            <div class="result-message" id="result-message"></div>
+        </div>
+
+        <div class="controls-right" aria-hidden="false">
+            <button class="play_button" onclick="startNewGame()">New Game</button>
+            <div class="game-actions-vertical">
+                <button class="action-button" id="hit-btn" onclick="playerHit()" disabled>Hit</button>
+                <button class="action-button" id="stand-btn" onclick="playerStand()" disabled>Stand</button>
+            </div>
+        </div>
     </div>
-    <section class="dealer">
-        <h2>Dealer</h2>
-        <div class="dealer-cards">
-            <img src="../images/1.png">
-            <img src="../images/11.png">
-
-        </div>
-
-    </section>
-    <section class="player">
-        <h2>Player</h2>
-        <div class="player-cards">
-            <img src="../images/10.png">
-            <img src="../images/12.png">
-        </div>
-    </section>
     
 </body>
 </html>
